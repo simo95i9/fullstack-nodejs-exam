@@ -1,0 +1,26 @@
+
+### GET all collections
+GET {{api}}/api/collections
+
+
+### GET collections in category
+GET {{api}}/api/men/clothes/collections
+
+
+### POST new collection
+POST {{api}}/api/men/clothes/collections
+Content-Type: application/json
+
+{
+    "name": "Jeans",
+    "shortName": "jeans",
+    "description": "boilerplate description"
+}
+
+
+### GET collections by shortname
+GET {{api}}/api/men/clothes/jeans
+
+
+### DELETE categories by id
+DELETE {{api}}/api/categories/63c62e5acfc476979548d997

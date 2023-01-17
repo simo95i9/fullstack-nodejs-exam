@@ -1,0 +1,19 @@
+
+### Create new account
+POST {{api}}/auth/signup
+Content-Type: application/json
+
+{
+    "name": "simon 1",
+    "email": "simon1@gred.al",
+    "password": "password1"
+}
+
+### Get a cookie and sign in
+POST {{api}}/auth/signin
+Content-Type: application/json
+
+{
+    "email": "simon1@gred.al",
+    "password": "password1"
+}

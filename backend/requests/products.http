@@ -1,0 +1,30 @@
+
+### GET all products
+GET {{api}}/api/products
+
+
+### GET products in model
+GET {{api}}/api/men/clothes/jeans/LWS-501/products
+
+
+### POST new model
+POST {{api}}/api/men/clothes/jeans/LWS-501/products
+Content-Type: application/json
+
+{
+    "description": "Boilerplate description",
+    "sku": "W34L32BLU",
+    "inventory": 5,
+    "traits": {
+        "Width": "34",
+        "Length": "32",
+        "Color": "Blue"
+    }
+}
+
+### GET product by sku
+GET {{api}}/api/men/clothes/jeans/LWS-501/W34L32BLU
+
+
+### DELETE product by id
+DELETE {{api}}/api/models/63c635a2bf6eb2af761036cd

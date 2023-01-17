@@ -1,0 +1,16 @@
+
+### GET all accounts
+GET {{api}}/api/accounts
+
+
+### GET orders in account
+GET {{api}}/api/accounts/simon1@gred.al/orders
+
+
+
+### GET category by shortname
+GET {{api}}/api/men/clothes/
+
+
+### DELETE category by id
+DELETE {{api}}/api/categories/63c62fa7b37ed7448dbb62bf

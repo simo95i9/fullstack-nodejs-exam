@@ -1,0 +1,29 @@
+
+### GET all models
+GET {{api}}/api/models
+
+
+### GET models in collection
+GET {{api}}/api/men/clothes/jeans/models
+
+
+### POST new model
+POST {{api}}/api/men/clothes/jeans/models
+Content-Type: application/json
+
+{
+    "name": "Lewis 501",
+    "sku": "LWS-501",
+    "description": "Boilerplate description 2",
+    "traits": [
+        {"name": "Width"}, {"name": "Length"}, {"name": "Color"}
+    ],
+    "tags": []
+}
+
+### GET model by sku
+GET {{api}}/api/men/clothes/jeans/LWS-501
+
+
+### DELETE model by id
+DELETE {{api}}/api/models/63c63a79be5bccb8cfe0f7d8

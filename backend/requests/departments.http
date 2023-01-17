@@ -1,0 +1,22 @@
+
+### GET all departments
+GET {{api}}/api/departments
+
+
+### GET department by shortname
+GET {{api}}/api/men/
+
+
+### POST new department
+POST {{api}}/api/departments
+Content-Type: application/json
+
+{
+    "name": "Electronics",
+    "shortName": "electronics",
+    "description": "boilerplate description"
+}
+
+
+### DELETE department by id
+DELETE {{api}}/api/63c619e7a11203a0d6afca44

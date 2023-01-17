@@ -1,0 +1,26 @@
+
+### GET all categories
+GET {{api}}/api/categories
+
+
+### GET categories in department
+GET {{api}}/api/men/categories
+
+
+### POST new category
+POST {{api}}/api/men/categories
+Content-Type: application/json
+
+{
+    "name": "Clothes",
+    "shortName": "clothes",
+    "description": "boilerplate description"
+}
+
+
+### GET category by shortname
+GET {{api}}/api/men/clothes/
+
+
+### DELETE category by id
+DELETE {{api}}/api/categories/63c62fa7b37ed7448dbb62bf
