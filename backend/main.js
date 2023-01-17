@@ -1,6 +1,15 @@
-import express from "express"
-
+import express from 'express'
 const app = express()
+
+import session from 'express-session'
+const sessionOptions = {
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}
+app.set('trust proxy', 1)
+app.use(session(sessionOptions))
 
 app.get('/*', (req, res) => {
     res.send('hello, world!')
