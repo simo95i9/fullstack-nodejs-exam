@@ -11,7 +11,15 @@ const sessionOptions = {
 app.set('trust proxy', 1)
 app.use(session(sessionOptions))
 
-app.get('/*', (req, res) => {
+
+import { router as api } from './api.js'
+app.use('/api/', api)
+
+import { router as auth } from './auth.js'
+app.use('/auth/', auth)
+
+
+app.get('/', (req, res) => {
     res.send('hello, world!')
 })
 
