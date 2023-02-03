@@ -3,6 +3,7 @@
 by Simon Gredal
 
 Watch this space 👀
+Frontend coming soon.
 
 ## What is this?
 This software tries to be a web shop and accompanying administration system. 
