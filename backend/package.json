@@ -17,6 +17,7 @@
     },
     "devDependencies": {},
     "scripts": {
+        "prestart": "node $npm_package_config_options setup.js",
         "start": "node $npm_package_config_options index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
