@@ -1,0 +1,11 @@
+localhost {
+    tls internal
+
+    reverse_proxy /api/* {
+        to localhost:6969
+    }
+
+    reverse_proxy * {
+        to localhost:5173
+    }
+}
