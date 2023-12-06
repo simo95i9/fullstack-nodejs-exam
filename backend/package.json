@@ -6,6 +6,11 @@
     "type": "module",
     "private": true,
     "dependencies": {
+        "argon2": "^0.31.2",
+        "express": "^5.0.0-beta.1",
+        "express-session": "^1.17.3",
+        "better-sqlite3": "^9.2.2",
+        "better-sqlite3-session-store": "^0.1.0"
     },
     "devDependencies": {},
     "scripts": {
