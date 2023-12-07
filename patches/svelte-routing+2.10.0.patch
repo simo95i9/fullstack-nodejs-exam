@@ -1,0 +1,16 @@
+diff --git a/node_modules/svelte-routing/package.json b/node_modules/svelte-routing/package.json
+index b5a5c91..008a80c 100755
+--- a/node_modules/svelte-routing/package.json
++++ b/node_modules/svelte-routing/package.json
+@@ -19,6 +19,11 @@
+     "main": "./src/index.js",
+     "types": "./types/index.d.ts",
+     "svelte": "./src/index.js",
++    "exports": {
++        ".": {
++            "svelte": "./src/index.js"
++        }
++    },
+     "devDependencies": {
+         "svelte": "^4.2.8",
+         "prettier": "^3.1.0",
