@@ -49,48 +49,48 @@ export class Logger {
     }
 
     /**
-     * @param {any} message
      * @param {LogLevel} log_level
+     * @param {any} message
      */
-    log(message, log_level) {
+    log(log_level, ...message) {
         console.group(`[ ${log_level.name} ] --- [ ${this.module_name} ]`)
-        console.log(undent(String(message)))
+        console.log(...(message.map(value => undent(String(value)))))
         console.groupEnd()
     }
 
     /**
      * @param {any} message
      */
-    trace(message) {
-        this.log(message, LogLevel.TRACE)
+    trace(...message) {
+        this.log(LogLevel.TRACE, message)
     }
 
     /**
      * @param {any} message
      */
-    debug(message) {
-        this.log(message, LogLevel.DEBUG)
+    debug(...message) {
+        this.log(LogLevel.DEBUG, message)
     }
 
     /**
      * @param {any} message
      */
-    info(message) {
-        this.log(message, LogLevel.INFO)
+    info(...message) {
+        this.log(LogLevel.INFO, message)
     }
 
     /**
      * @param {any} message
      */
-    warn(message) {
-        this.log(message, LogLevel.WARN)
+    warn(...message) {
+        this.log(LogLevel.WARN, message)
     }
 
     /**
      * @param {any} message
      */
-    error(message) {
-        this.log(message, LogLevel.ERROR)
+    error(...message) {
+        this.log(LogLevel.ERROR, message)
     }
 }
 
