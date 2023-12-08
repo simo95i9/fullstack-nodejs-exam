@@ -1,5 +1,7 @@
 <script>
     import { Router, Link, Route } from 'svelte-routing'
+    import { onMount } from 'svelte'
+    import { accounts } from './api.js'
 
     import Home from './routes/Home.svelte'
     import About from './routes/About.svelte'
@@ -9,10 +11,13 @@
     import SignUp from './routes/SignUp.svelte'
     import SignOut from './routes/SignOut.svelte'
 
-    import NavigationMenu from './components/NavigationMenu.svelte'
+    import NavigationMenu from './lib/NavigationMenu.svelte'
     import ProtectedRoute from './lib/ProtectedRoute.svelte'
 
-    export let url = document.location.pathname
+    let url = document.location.pathname
+    onMount(async () => {
+        await accounts.status({ })
+    })
 </script>
 
 <Router {url}>
