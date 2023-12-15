@@ -38,9 +38,10 @@ export function undent() {
 const LogLevel = {
     TRACE: { value: 0, name: 'TRACE' },
     DEBUG: { value: 1, name: 'DEBUG' },
-    INFO: { value: 2, name: 'INFO' },
-    WARN: { value: 3, name: 'WARN' },
-    ERROR: { value: 4, name: 'ERROR' }
+    VERBOSE: { value: 2, name: 'VERBOSE' },
+    INFO: { value: 3, name: 'INFO' },
+    WARN: { value: 4, name: 'WARN' },
+    ERROR: { value: 5, name: 'ERROR' },
 }
 
 export class Logger {
@@ -53,8 +54,8 @@ export class Logger {
      * @param {any} message
      */
     log(log_level, ...message) {
-        console.group(`[ ${log_level.name} ] --- [ ${this.module_name} ]`)
-        console.log(...(message.map(value => undent(String(value)))))
+        console.group(`${Temporal.Now.plainDateTimeISO()} - [${log_level.name}] [ ${this.module_name} ]`)
+        message.map((value) => undent(String(value))).forEach(s => console.log(s))
         console.groupEnd()
     }
 
@@ -70,6 +71,13 @@ export class Logger {
      */
     debug(...message) {
         this.log(LogLevel.DEBUG, message)
+    }
+
+    /**
+     * @param {any} message
+     */
+    verbose(...message) {
+        this.log(LogLevel.VERBOSE, message)
     }
 
     /**
@@ -96,7 +104,6 @@ export class Logger {
 
 /**
  * @readonly
- * @enum
  * @description The status codes listed below are defined by RFC 9110 (minus deprecated and WebDAV related stuff)
  * @see: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
  */
@@ -123,7 +130,7 @@ export const http_status_codes = {
          * preloading resources while the server prepares a response or preconnect to an origin from which the
          * page will need resources.
          */
-        early_hints: 103
+        early_hints: 103,
     },
 
     /**
@@ -180,7 +187,7 @@ export const http_status_codes = {
          * The server has fulfilled a GET request for the resource, and the response is a representation of the
          * result of one or more instance-manipulations applied to the current instance.
          */
-        im_used: 226
+        im_used: 226,
     },
 
     /**
@@ -232,7 +239,7 @@ export const http_status_codes = {
          * code, with the exception that the user agent must not change the HTTP method used: if a POST was used
          * in the first request, a POST must be used in the second request.
          */
-        permanent_redirect: 308
+        permanent_redirect: 308,
     },
 
     /**
@@ -394,7 +401,7 @@ export const http_status_codes = {
          * The user agent requested a resource that cannot legally be provided, such as a web page censored by
          * a government.
          */
-        unavailable_for_legal_reasons: 451
+        unavailable_for_legal_reasons: 451,
     },
 
     /**
@@ -452,10 +459,9 @@ export const http_status_codes = {
         /**
          * Indicates that the client needs to authenticate to gain network access.
          */
-        network_authentication_required: 511
-    }
+        network_authentication_required: 511,
+    },
 }
-
 
 /**
  * HTTP request methods
@@ -483,8 +489,5 @@ export const http_request_methods = {
     // TRACE: The TRACE method performs a message loop-back test along the path to the target resource.
     trace: 'TRACE',
     // PATCH: The PATCH method applies partial modifications to a resource.
-    patch: 'PATCH'
-
-
+    patch: 'PATCH',
 }
-

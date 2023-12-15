@@ -1,6 +1,3 @@
-import {Logger } from 'shared/utils.js'
-const logger = new Logger('main')
-
 import express from 'express'
 const app = express()
 
@@ -11,10 +8,14 @@ app.use(session(session_options))
 import { router as auth } from 'backend/routes/auth.js'
 app.use('/api/auth/', auth)
 
-app.get('/', (req, res) => {
-    res.send('hello world')
-})
+import { router as events } from 'backend/routes/events.js'
+app.use('/api/auth/', auth)
+
+import { Logger } from 'shared/utils.js'
+const logger = new Logger('backend/index')
 
 import { port, hostname } from 'backend/config.js'
-const server = app.listen(port, hostname)
-logger.info(`Web Server is listening on http://${hostname}:${port}/`)
+const server = app.listen(port, hostname, () => {
+    const address = server.address()
+    logger.info(`Web Server is listening on http://${address.address}:${address.port}/`)
+})

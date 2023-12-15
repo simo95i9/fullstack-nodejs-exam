@@ -1,10 +1,4 @@
-<script>
-    export let maxWidth = 'auto'
-</script>
-
-<div style='max-width: {maxWidth}'>
-
-</div>
+<div></div>
 
 <style>
     div {

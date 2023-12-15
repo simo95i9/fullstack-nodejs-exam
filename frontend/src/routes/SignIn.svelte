@@ -1,63 +1,53 @@
 <script>
-    import { accounts } from '../api.js'
+    import { account, signin } from '../api/auth.js'
     import { navigate } from 'svelte-routing'
-
-    import { Logger } from 'shared/utils.js'
-    const logger = new Logger('frontend::signin')
+    import { onDestroy } from 'svelte'
 
     let form = {
         email: '',
-        password: '',
+        password: ''
     }
 
+    let timed_action = -1
     async function submit() {
-        const response = await accounts.signin(form)
-
-        if (!response.success) {
-            logger.debug(response)
-            return
+        await signin(form)
+        if ($account) {
+            timed_action = setTimeout(() => { navigate('/')}, 1000)
         }
-
-        navigate('/')
     }
+
+    onDestroy(() => {
+        clearTimeout(timed_action)
+    })
 </script>
 
-<fieldset>
-    <legend>
-        <h1>Sign-In form</h1>
-    </legend>
-    <form action='#' on:submit|preventDefault={submit}>
+<div>
+    <h1>Sign In</h1>
 
-        <label for='email'>Email</label>
-        <input type='text' id='text' name='text' placeholder='alice@example.com' bind:value={form.email}>
+    <form id="signin" on:submit|preventDefault={submit}>
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="email"
+               placeholder='alice@example.com' bind:value={form.email}>
+        <label for="password">Password</label>
+        <input id="password" type='password' autocomplete='current-password'
+               placeholder='••••••••••••' bind:value={form.password}>
 
-        <label for='password'>Password</label>
-        <input type='password' id='password' name='password' autocomplete='current-password' placeholder='••••••••••••' bind:value={form.password}>
-
-        <input type='submit' value='Sign In!'>
     </form>
-</fieldset>
+
+    <button form="signin" type="submit">Sign In</button>
+</div>
+
 
 <style>
-    fieldset {
-        margin: auto;
-        padding: 1em;
-        max-width: 700px;
-
-        border: var(--border-width) solid grey;
-        border-radius: var(--border-radius);
+    div {
+        max-width: 900px;
+        margin-inline: auto;
     }
 
     form {
         display: grid;
         grid-template-columns: fit-content(32ch) auto;
         grid-column-gap: 0.5em;
-    }
-
-    input[type=submit] {
-        border: var(--border-width) solid lightgrey;
-        border-radius: var(--border-radius);
-        background-color: unset;
     }
 
     input[type=text], input[type=email], input[type=password] {
@@ -80,4 +70,9 @@
         text-align: end;
         padding-inline-start: 1em;
     }
+
+    button {
+        all: unset;
+    }
+
 </style>

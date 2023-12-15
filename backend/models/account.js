@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto'
+import { Temporal } from 'temporal-polyfill'
 
 import { Logger, undent } from 'shared/utils.js'
 const logger = new Logger('models::account')
@@ -14,6 +15,7 @@ export const create_table_sql = undent`
             password VARCHAR(256)           NOT NULL,
             full_name VARCHAR(256)          NOT NULL,
             display_name VARCHAR(64)        NOT NULL,
+            
             datetime_created VARCHAR(32)    NOT NULL,
             datetime_modified VARCHAR(32)   NULL,
             datetime_deleted VARCHAR(32)    NULL
@@ -73,10 +75,37 @@ export function database_table_is_valid() {
  * @property {String} password
  * @property {String} full_name
  * @property {String} display_name
- * @property {Temporal.PlainDateTime} datetime_created
- * @property {Temporal.PlainDateTime} datetime_modified
- * @property {Temporal.PlainDateTime} datetime_deleted
+ * @property {import('temporal-polyfill').Temporal.PlainDateTime} datetime_created
+ * @property {import('temporal-polyfill').Temporal.PlainDateTime} datetime_modified
+ * @property {import('temporal-polyfill').Temporal.PlainDateTime} datetime_deleted
  */
+
+
+/**
+ * @param {String} id
+ * @return {boolean}
+ */
+export function exists_by_id(id) {
+    const select_statement = database.prepare(undent`
+        SELECT * FROM accounts WHERE id = $id
+    `)
+    const result = select_statement.get({ id: id })
+    return !!result
+}
+
+/**
+ * @param {String} id
+ * @return {Account|null}
+ */
+export function get_by_id(id) {
+    const select_statement = database.prepare(undent`
+        SELECT * FROM accounts WHERE id = $id
+    `)
+    const result = select_statement.get({ id: id })
+    return result ? { ...result } : null
+}
+
+
 
 /**
  * @param {String} email
@@ -115,7 +144,7 @@ export function create_new(account_signup_request) {
         full_name: account_signup_request.full_name,
         display_name: account_signup_request.display_name,
         datetime_created: Temporal.Now.plainDateTimeISO(),
-        datetime_modified: Temporal.Now.plainDateTimeISO(),
+        datetime_modified: null,
         datetime_deleted: null,
     }
 
@@ -131,9 +160,9 @@ export function create_new(account_signup_request) {
         password: String(account.password),
         full_name: String(account.full_name),
         display_name: String(account.display_name),
-        datetime_created: String(account.datetime_created),
-        datetime_modified: String(account.datetime_modified),
-        datetime_deleted: account.datetime_deleted,
+        datetime_created: account.datetime_created ? String(account.datetime_created) : null,
+        datetime_modified: account.datetime_modified ? String(account.datetime_modified) : null,
+        datetime_deleted: account.datetime_deleted ? String(account.datetime_deleted) : null,
     })
     logger.debug(insert_result)
 

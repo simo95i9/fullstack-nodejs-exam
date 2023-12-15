@@ -1,9 +1,7 @@
 <script>
-    import { Logger } from 'shared/utils.js'
+    import { account, signup } from '../api/auth.js'
     import { navigate } from 'svelte-routing'
-
-    const logger = new Logger('frontend::signup')
-    import { accounts } from '../api.js'
+    import { onDestroy } from 'svelte'
 
     let form = {
         full_name: '',
@@ -12,68 +10,55 @@
         password: ''
     }
 
+    let timed_action
     async function submit() {
-        const response = await accounts.signup(form)
-
-        if (!response.success) {
-            logger.debug(response)
-            return
+        await signup(form)
+        if ($account) {
+            timed_action = setTimeout(() => {
+                navigate('/')
+            }, 1000)
         }
-
-        navigate('/')
     }
 
+    onDestroy(() => {
+        clearTimeout(timed_action)
+    })
 </script>
 
+<div>
+    <h1>Sign In</h1>
 
-<fieldset>
-    <legend>
-        <h1>Sign-Up form</h1>
-    </legend>
-    <form action='#' on:submit|preventDefault={ submit }>
+    <form id="signin" on:submit|preventDefault={submit}>
+        <label for="full_name">Full Name</label>
+        <input id="full_name" type="text" autocomplete="name" placeholder="Your full name"
+               bind:value={form.full_name}>
+        <label for="display_name">Display Name</label>
+        <input id="display_name" type="text" autocomplete="nickname" placeholder="Your display name"
+               bind:value={form.display_name}>
 
-        <label for='full_name'>Full name</label>
-        <input type='text' id='full_name' name='full_name' autocomplete='name'
-               placeholder='Your full name' bind:value={form.full_name}>
-
-        <label for='display_name'>Display name</label>
-        <input type='text' id='display_name' name='display_name' autocomplete='nickname'
-               placeholder='How you would like to be addressed' bind:value={form.display_name}>
-
-        <label for='email'>Email</label>
-        <input type='text' id='text' name='text' placeholder='alice@example.com'
-               bind:value={form.email}>
-
-        <label for='password'>Password</label>
-        <input type='password' id='password' name='password' autocomplete='new-password'
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="email"
+               placeholder='alice@example.com' bind:value={form.email}>
+        <label for="password">Password</label>
+        <input id="password" type='password' autocomplete='current-password'
                placeholder='••••••••••••' bind:value={form.password}>
 
-        <input type='submit' value='Sign Up!'>
     </form>
-</fieldset>
+
+    <button form="signin" type="submit">Sign Up</button>
+</div>
 
 
 <style>
-    fieldset {
-        margin: auto;
-        padding: 1em;
-        max-width: 700px;
-
-        border: var(--border-width) solid grey;
-        border-radius: var(--border-radius);
+    div {
+        max-width: 900px;
+        margin-inline: auto;
     }
 
     form {
         display: grid;
         grid-template-columns: fit-content(32ch) auto;
         grid-column-gap: 0.5em;
-        grid-row-gap: 0.5em;
-    }
-
-    input[type=submit] {
-        border: var(--border-width) solid lightgrey;
-        border-radius: var(--border-radius);
-        background-color: unset;
     }
 
     input[type=text], input[type=email], input[type=password] {
@@ -95,6 +80,21 @@
     label {
         text-align: end;
         padding-inline-start: 1em;
+    }
+
+    button {
+        border: var(--border-width) solid black;
+        border-radius: var(--border-radius);
+        background-color: var(--clr-vanilla-2);
+    }
+
+    button:hover {
+        background-color: var(--clr-vanilla-3);
+
+    }
+
+    button:active {
+        background-color: var(--clr-vanilla-1);
     }
 
 </style>

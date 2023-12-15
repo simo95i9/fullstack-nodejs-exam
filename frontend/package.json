@@ -7,9 +7,11 @@
   "dependencies": {},
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
-    "svelte": "^4.2.7",
+    "svelte": "^4.2.8",
     "vite": "^5.0.0",
-    "svelte-routing": "^2.10.0"
+    "svelte-routing": "^2.10.0",
+    "temporal-polyfill": "^0.1.1"
+
   },
   "scripts": {
     "dev": "vite",

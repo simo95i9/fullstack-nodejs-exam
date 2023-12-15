@@ -1,0 +1,71 @@
+html {
+    font-size: 12pt;
+    color: var(--clr-rich-black-1);
+    font-weight: 700;
+    font-family: Inter, system-ui, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+:root {
+    --menu-column-gap: 2em;
+    --menu-row-gap: 1em;
+
+    --border-width: 2pt;
+    --border-color: var(--clr-rich-black-1);
+    --border-radius: 8pt;
+
+    --theme-header-footer: var(--clr-alloy-orange-1);
+
+    --clr-rich-black-1:     oklch( 10%  3% 219deg);
+    --clr-rich-black-2:     oklch( 15%  3% 219deg);
+    --clr-rich-black-3:     oklch( 20%  3% 219deg);
+
+    --clr-off-white-1:      oklch( 90%  2% 219deg);
+    --clr-off-white-2:      oklch( 95%  2% 219deg);
+    --clr-off-white-3:      oklch(100%  2% 219deg);
+
+    --clr-midnight-green-1: oklch( 33% 10% 219deg);
+    --clr-midnight-green-2: oklch( 45% 10% 219deg);
+    --clr-midnight-green-3: oklch( 57% 10% 219deg);
+
+    --clr-dark-cyan-1:      oklch( 58% 10% 197deg);
+    --clr-dark-cyan-2:      oklch( 60% 10% 197deg);
+    --clr-dark-cyan-3:      oklch( 62% 10% 197deg);
+
+    --clr-tiffany-blue-1:   oklch( 78%  7% 171deg);
+    --clr-tiffany-blue-2:   oklch( 80%  7% 171deg);
+    --clr-tiffany-blue-3:   oklch( 82%  7% 171deg);
+
+    --clr-vanilla-1:        oklch( 88%  7%  91deg);
+    --clr-vanilla-2:        oklch( 90%  7%  91deg);
+    --clr-vanilla-3:        oklch( 92%  7%  91deg);
+
+    --clr-gamboge-1:        oklch( 73% 16%  71deg);
+    --clr-gamboge-2:        oklch( 75% 16%  71deg);
+    --clr-gamboge-3:        oklch( 77% 16%  71deg);
+
+    --clr-alloy-orange-1:   oklch( 58% 15%  54deg);
+    --clr-alloy-orange-2:   oklch( 60% 15%  54deg);
+    --clr-alloy-orange-3:   oklch( 62% 15%  54deg);
+
+    --clr-rust-1:           oklch( 53% 17%  39deg);
+    --clr-rust-2:           oklch( 55% 17%  39deg);
+    --clr-rust-3:           oklch( 57% 17%  39deg);
+
+    --clr-rufous-1:         oklch( 48% 18%  30deg);
+    --clr-rufous-2:         oklch( 50% 18%  30deg);
+    --clr-rufous-3:         oklch( 52% 18%  30deg);
+
+    --clr-auburn-1:         oklch( 43% 16%  24deg);
+    --clr-auburn-2:         oklch( 45% 16%  24deg);
+    --clr-auburn-3:         oklch( 47% 16%  24deg);
+
+    @media (prefers-color-scheme: dark) {
+        
+    }
+}
