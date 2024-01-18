@@ -31,6 +31,7 @@
             event.posts = await get_posts_by_event_id({ event_id: id })
             event.tags = await get_tags_by_event_id({ event_id: id })
         }
+        console.dir(event)
     })
 
 </script>
@@ -75,7 +76,7 @@
         {/if}
 
 
-        {#if event.account_id === $account.id}
+        {#if $account && event.account_id === $account.id}
             <Card>
                 <Form {submit} {reset}>
                     <label for="content">
@@ -95,8 +96,8 @@
         <div>
             <h2>Updates</h2>
             <div class="flex">
-                {#each event.posts ?? [] as post (post.id)}
-                    <Card>{@html post.content}</Card>
+                {#each event.posts ?? [] as post}
+                    <Card><div class="body_text">{@html post.content}</div></Card>
                 {:else}
                     Doesn't seem like the organizers have made any posts, yet...
                 {/each}
@@ -112,6 +113,10 @@
         flex-flow: column;
 
         row-gap: 2rem;
+    }
+
+    .body_text {
+        font-weight: 450;
     }
 
     .flex {

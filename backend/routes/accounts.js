@@ -38,6 +38,22 @@ function get_by_id(request, response, next) {
     }
 
     const account = account_repository.get_by_id(request.params.account_id)
+
+    // Unauthenticated accounts get very little detail
+    if (!('account' in request.session)) {
+        response.json({
+            success: true,
+            data: {
+                ...account,
+                email: null,
+                password: null,
+                datetime_created: null,
+                datetime_modified: null,
+                datetime_deleted: null,
+            },
+        })
+    }
+
     // The account owner and administrators get all the detail
     if (request.params.account_id === request.session.account.id || request.session.account.admin) {
         response.json({
@@ -62,19 +78,6 @@ function get_by_id(request, response, next) {
         })
         return
     }
-
-    // Unauthenticated accounts get very little detail
-    response.json({
-        success: true,
-        data: {
-            ...account,
-            email: null,
-            password: null,
-            datetime_created: null,
-            datetime_modified: null,
-            datetime_deleted: null,
-        },
-    })
 }
 
 /**
