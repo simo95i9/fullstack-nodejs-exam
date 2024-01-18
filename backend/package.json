@@ -13,19 +13,18 @@
         "express": "^4.18.2",
         "express-session": "^1.17.3",
         "better-sqlite3": "^9.2.2",
-        "better-sqlite3-session-store": "^0.1.0"
+        "better-sqlite3-session-store": "^0.1.0",
+        "sharp": "^0.33.2"
     },
     "devDependencies": {
         "@types/better-sqlite3": "^7.6.8",
         "@types/express": "^4.17.21",
         "@types/express-session": "^1.17.10",
-        "temporal-polyfill": "^0.1.1"
+        "temporal-polyfill": "^0.2.0"
     },
     "scripts": {
         "prestart": "node $npm_package_config_options setup.js",
         "start": "node $npm_package_config_options index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "",
-    "license": "ISC"
+    }
 }

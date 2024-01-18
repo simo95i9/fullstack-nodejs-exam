@@ -3,9 +3,16 @@ import { Temporal } from 'temporal-polyfill'
 import { Logger } from 'shared/utils.js'
 
 export const port = 6969
-export const hostname = 'localhost'
+export const host = 'localhost'
+
+
+// Markdown Parser
+import { default as markdown_it} from 'markdown-it'
+export const markdown = markdown_it('commonmark', { typographer: true })
+
 
 // Configure database
+const data_version = 22;
 const database_logger = new Logger('backend/database')
 import Database from 'better-sqlite3'
 export const database = Database('./database/database.sqlite', {
@@ -15,6 +22,7 @@ export const database = Database('./database/database.sqlite', {
 })
 database.pragma('journal_mode = WAL')
 database.pragma('foreign_keys = ON')
+
 
 // Configure session cookies and storage
 import { Store } from 'express-session'

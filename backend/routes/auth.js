@@ -1,7 +1,7 @@
 import { Router, json } from 'express'
 
 export const router = Router()
-router.use(json())
+router.use(json({limit: '10mb'}))
 
 router.get('/', get_current_session)
 router.post('/signin', authenticate_session)
@@ -9,10 +9,10 @@ router.post('/signout', deauthenticate_session)
 router.post('/signup', create_new_account)
 
 
-import * as account_repository from 'backend/models/account.js'
+import * as account_repository from 'backend/models/accounts.js'
 import { hash, verify } from 'argon2'
-import { http_status_codes } from 'shared/utils.js'
-
+import { bufferToBase64DataUrl, http_status_codes } from 'shared/utils.js'
+import sharp from 'sharp'
 
 /**
  * @callback
@@ -21,7 +21,7 @@ import { http_status_codes } from 'shared/utils.js'
  * @param {import('express').NextFunction} next
  */
 function get_current_session(request, response, next) {
-    if (!('account' in request.session) && typeof request.session.account !== 'object') {
+    if (!('account' in request.session)) {
         response.json({ success: true, data: null })
         return
     }
@@ -35,7 +35,6 @@ function get_current_session(request, response, next) {
     response.json({ success: true, data: { ...account, password: null } })
 }
 
-
 /**
  * @callback
  * @param {import('express').Request} request
@@ -43,12 +42,11 @@ function get_current_session(request, response, next) {
  * @param {import('express').NextFunction} next
  */
 function deauthenticate_session(request, response, next) {
-    request.session.destroy()
+    request.session.destroy(() => { })
 
     response.status(http_status_codes.success.ok)
     response.send({ success: true, data: null })
 }
-
 
 /**
  * @callback
@@ -92,7 +90,6 @@ async function authenticate_session(request, response, next) {
     response.send({ success: true, data: { ...account, password: null } })
 }
 
-
 /**
  * @callback
  * @param {import('express').Request} request
@@ -101,30 +98,24 @@ async function authenticate_session(request, response, next) {
  */
 async function create_new_account(request, response, next) {
     // Validate that signup request has required fields
-    if (
-        !('email' in request.body) &&
-        typeof request.body['email'] !== 'string' &&
-        !('password' in request.body) &&
-        typeof request.body['password'] !== 'string' &&
-        !('full_name' in request.body) &&
-        typeof request.body['full_name'] !== 'string' &&
-        !('display_name' in request.body) &&
-        typeof request.body['display_name'] !== 'string'
-    ) {
-        response.status(http_status_codes.client_error.bad_request)
-        response.send({
-            success: false,
-            error: 'missing required fields: "full_name", "display_name", "email", "password"',
-        })
+    const result = account_repository.validate_request_body(request.body)
+    if (!result.success) {
+        response.status(http_status_codes.client_error.bad_request).json(result)
         return
     }
 
+    const dataurl = await fetch(request.body.picture)
+    const original_image = await dataurl.arrayBuffer()
+    const resized_image = await sharp(original_image).resize({height: 320, width: 320}).avif().toBuffer()
+
     // Try to create the account in the database
+    /** @type {AccountSignUpRequest} */
     const account_signup_request = {
         email: request.body['email'],
         password: await hash(request.body['password']),
         full_name: request.body['full_name'],
         display_name: request.body['display_name'],
+        picture: await bufferToBase64DataUrl(resized_image, 'image/avif')
     }
     const account = account_repository.create_new(account_signup_request)
 

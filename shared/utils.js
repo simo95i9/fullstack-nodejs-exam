@@ -1,3 +1,38 @@
+import * as fs from 'node:fs/promises'
+
+/**
+ * Based on the following functions from MDN
+ * @see https://developer.mozilla.org/en-US/docs/Glossary/Base64#converting_arbitrary_binary_data
+ *
+ * @param {File} file
+ * @return {Promise<String>}
+ */
+export async function fileToBase64DataUrl(file) {
+    // Browser runtime
+    return await new Promise((resolve, reject) => {
+        const reader = Object.assign(new FileReader(), {
+            onload: () => resolve(reader.result),
+            onerror: () => reject(reader.error),
+        })
+        reader.readAsDataURL(file)
+
+
+    })
+}
+
+/**
+ * Based on the following functions from MDN
+ * @see https://developer.mozilla.org/en-US/docs/Glossary/Base64#converting_arbitrary_binary_data
+ *
+ * @param {Buffer} buffer
+ * @param {String} type
+ * @return {Promise<String>}
+ */
+export async function bufferToBase64DataUrl(buffer, type) {
+    // NodeJS runtime
+    return `data:${type};base64,${buffer.toString('base64')}`
+}
+
 /**
  * Tag function to be used on template literals, for un-indenting them
  * This lets you have a little more freedom to format your string in the source code

@@ -1,8 +1,9 @@
 <script>
-    import Details from 'frontend/src/routes/Profile/Details.svelte'
+    import Tags from 'frontend/src/routes/Admin/Tags.svelte'
+    import Accounts from 'frontend/src/routes/Admin/Accounts.svelte'
+    import Events from 'frontend/src/routes/Admin/Events.svelte'
+
     import { Link, Route, Router } from 'svelte-routing'
-    import Auth from 'frontend/src/routes/Profile/Auth.svelte'
-    import Events from 'frontend/src/routes/Profile/Events.svelte'
     import Card from 'frontend/src/lib/Card.svelte'
 </script>
 
@@ -11,16 +12,16 @@
     <aside>
         <Card background={true}>
             <nav>
-                <Link to="details">Details</Link>
-                <Link to="auth">Authentication</Link>
+                <Link to="tags">Tags</Link>
+                <Link to="accounts">Accounts</Link>
                 <Link to="events">Events</Link>
             </nav>
         </Card>
     </aside>
     <main>
-        <Route component={Details} path="" />
-        <Route component={Details} path="details" />
-        <Route component={Auth} path="auth" />
+        <Route component={Tags} path="" />
+        <Route component={Tags} path="tags" />
+        <Route component={Accounts} path="accounts" />
         <Route component={Events} path="events" />
     </main>
 </Router>

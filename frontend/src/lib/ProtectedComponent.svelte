@@ -1,9 +1,9 @@
 <script>
-    import { account } from '../api/auth.js'
+    import { account } from 'frontend/src/api/auth.js'
 </script>
 
 {#if $account}
-    <slot name='signed_in'></slot>
+    <slot name='authenticated'></slot>
 {:else}
-    <slot name='signed_out'></slot>
+    <slot name='unauthenticated'></slot>
 {/if}

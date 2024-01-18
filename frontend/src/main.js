@@ -1,5 +1,5 @@
-import 'frontend/src/assets/reset.css'
-import 'frontend/src/assets/styles.css'
+import "/src/assets/reset.css"
+import "/src/assets/styles.css"
 
 import App from './App.svelte'
 
